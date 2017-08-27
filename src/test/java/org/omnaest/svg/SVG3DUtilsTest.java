@@ -28,18 +28,18 @@ public class SVG3DUtilsTest
 {
 
 	@Test
-	public void testNewSVGRenderer3D() throws Exception
+	public void testGetDrawer() throws Exception
 	{
 		//
-		SVGRenderer3D renderer = SVG3DUtils.newSVGRenderer3D(1000, 800);
+		SVGDrawer3D renderer = SVG3DUtils.getDrawer(1000, 800, 200);
 
-		renderer.addElement(new SVG3DCircle(100, 0, 0, 20));
-		renderer.addElement(new SVG3DCircle(0, 100, 0, 20));
-		renderer.addElement(new SVG3DCircle(0, 0, 100, 20));
+		renderer.add(new SVG3DCircle(100, 0, 0, 20));
+		renderer.add(new SVG3DCircle(0, 100, 0, 20));
+		renderer.add(new SVG3DCircle(0, 0, 100, 20));
 
-		renderer.addElement(new SVG3DLine(100, 0, 0, 0, 100, 0));
-		renderer.addElement(new SVG3DLine(100, 0, 0, 0, 0, 100));
-		renderer.addElement(new SVG3DLine(0, 100, 0, 0, 0, 100));
+		renderer.add(new SVG3DLine(100, 0, 0, 0, 100, 0));
+		renderer.add(new SVG3DLine(100, 0, 0, 0, 0, 100));
+		renderer.add(new SVG3DLine(0, 100, 0, 0, 0, 100));
 
 		//
 		double angleX = 0.0;

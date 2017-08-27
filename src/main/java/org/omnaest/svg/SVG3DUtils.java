@@ -1,4 +1,4 @@
-/* 
+/*
 
 	Copyright 2017 Danny Kunz
 
@@ -13,15 +13,20 @@
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
 	limitations under the License.
-	
+
 
 */
 package org.omnaest.svg;
 
+/**
+ * @see #getDrawer(int, int, int)
+ * @see SVGUtils
+ * @author Omnaest
+ */
 public class SVG3DUtils
 {
-	public static SVGRenderer3D newSVGRenderer3D(int width, int height)
+	public static SVGDrawer3D getDrawer(int width, int height, int depth)
 	{
-		return new SVGRenderer3D(width, height);
+		return new SVGDrawer3D(width, height, depth);
 	}
 }

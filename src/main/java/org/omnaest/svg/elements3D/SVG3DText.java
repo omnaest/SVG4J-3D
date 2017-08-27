@@ -18,27 +18,32 @@
 */
 package org.omnaest.svg.elements3D;
 
-import org.omnaest.svg.elements.SVGCircle;
+import org.omnaest.svg.elements.SVGText;
 import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.vector.Vector;
 
-public class SVG3DCircle implements SVG3DElement
+public class SVG3DText implements SVG3DElement
 {
 	private int	x;
 	private int	y;
 	private int	z;
-	private int	r;
 
-	private String	strokeColor	= "white";
-	private String	fillColor	= "red";
+	private String	text;
+	private int		fontSize	= SVGText.DEFAULT_FONTSIZE;
 
-	public SVG3DCircle(int x, int y, int z, int r)
+	public SVG3DText(int x, int y, int z, String text)
 	{
 		super();
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.r = r;
+		this.text = text;
+	}
+
+	public SVG3DText setFontSize(int fontSize)
+	{
+		this.fontSize = fontSize;
+		return this;
 	}
 
 	@Override
@@ -47,26 +52,12 @@ public class SVG3DCircle implements SVG3DElement
 		Vector location = new Vector(this.x, this.y, this.z).rotate(angleX, angleY, angleZ);
 
 		double maxDistance = Math.sqrt(depth);
-		int projectedRadius = (int) (this.r * maxDistance / Math.sqrt(maxDistance * maxDistance + location.getZ()));
+		int projectedFontSize = (int) (this.fontSize * maxDistance / Math.sqrt(maxDistance * maxDistance + location.getZ()));
 
-		SVGElement element = new SVGCircle((int) location.getX(), (int) location.getY(), projectedRadius)	.setFillColor(this.fillColor)
-																											.setStrokeColor(this.strokeColor)
-																											.setStrokeWidth(3);
+		SVGElement element = new SVGText((int) location.getX(), (int) location.getY(), this.text).setFontSize(projectedFontSize);
 
 		double zIndex = location.getZ();
 		return new SVGElementAndZIndex(element, zIndex);
-	}
-
-	public SVG3DElement setFillColor(String fillColor)
-	{
-		this.fillColor = fillColor;
-		return this;
-	}
-
-	public SVG3DCircle setStrokeColor(String strokeColor)
-	{
-		this.strokeColor = strokeColor;
-		return this;
 	}
 
 }

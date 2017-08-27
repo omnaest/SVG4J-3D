@@ -26,21 +26,23 @@ import java.util.stream.Collectors;
 import org.omnaest.svg.SVGDrawer.SVGRenderResult;
 import org.omnaest.svg.elements3D.SVG3DElement;
 
-public class SVGRenderer3D
+public class SVGDrawer3D
 {
 	private int	width;
 	private int	height;
+	private int	depth;
 
 	private List<SVG3DElement> elements = new ArrayList<>();
 
-	public SVGRenderer3D(int width, int height)
+	public SVGDrawer3D(int width, int height, int depth)
 	{
 		super();
 		this.width = width;
 		this.height = height;
+		this.depth = depth;
 	}
 
-	public SVGRenderer3D addElement(SVG3DElement element)
+	public SVGDrawer3D add(SVG3DElement element)
 	{
 		if (element != null)
 		{
@@ -54,7 +56,7 @@ public class SVGRenderer3D
 		SVGDrawer drawer = SVGUtils.getDrawer(-this.width / 2, -this.height / 2, this.width, this.height);
 		drawer.setEmbedReloadTimer(300, TimeUnit.MILLISECONDS);
 		drawer.addAll(this.elements	.stream()
-									.map(element3D -> element3D.projection(angleX, angleY, angleZ))
+									.map(element3D -> element3D.projection(angleX, angleY, angleZ, this.depth))
 									.sorted((e1, e2) -> -1 * Double.compare(e1.getzIndex(), e2.getzIndex()))
 									.map(elementAndZIndex -> elementAndZIndex.getElement())
 									.collect(Collectors.toList()));

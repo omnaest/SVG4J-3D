@@ -46,15 +46,15 @@ public class SVG3DLine implements SVG3DElement
 	}
 
 	@Override
-	public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ)
+	public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth)
 	{
 		Vector startLocation = new Vector(this.x1, this.y1, this.z1).rotate(angleX, angleY, angleZ);
 		Vector endLocation = new Vector(this.x2, this.y2, this.z2).rotate(angleX, angleY, angleZ);
 
-		Vector deltaNormVector = endLocation.subtract(startLocation)
-											.normVector();
+		Vector deltaVector = endLocation.subtract(startLocation);
+		Vector deltaNormVector = deltaVector.normVector();
 
-		double maxDistance = Math.sqrt(200);
+		double maxDistance = Math.sqrt(depth);
 		int startStrokeWidth = (int) (5 * maxDistance / Math.sqrt(maxDistance * maxDistance + startLocation.getZ()));
 		int endStrokeWidth = (int) (5 * maxDistance / Math.sqrt(maxDistance * maxDistance + endLocation.getZ()));
 
@@ -69,7 +69,8 @@ public class SVG3DLine implements SVG3DElement
 															this.createSVGVector(endLocation.add(deltaNormVector.multiply(endStrokeWidth)
 																												.rotateZ(90))))).setStrokeColor("white");
 
-		double zIndex = Math.round(startLocation.getZ() + endLocation.getZ() / 2);
+		double zIndex = Math.round(startLocation.add(deltaVector.divide(2))
+												.getZ());
 
 		return new SVGElementAndZIndex(element, zIndex);
 	}
