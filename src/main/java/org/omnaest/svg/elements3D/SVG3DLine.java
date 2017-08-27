@@ -34,6 +34,12 @@ public class SVG3DLine implements SVG3DElement
 	private int	y2;
 	private int	z2;
 
+	private String	strokeColor		= "white";
+	private String	fillColor		= "lightgrey";
+	private double	fillOpacity		= 1.0;
+	private double	strokeOpacity	= 1.0;
+	private int		strokeWidth		= 3;
+
 	public SVG3DLine(int x1, int y1, int z1, int x2, int y2, int z2)
 	{
 		super();
@@ -43,6 +49,36 @@ public class SVG3DLine implements SVG3DElement
 		this.x2 = x2;
 		this.y2 = y2;
 		this.z2 = z2;
+	}
+
+	public SVG3DLine setStrokeColor(String strokeColor)
+	{
+		this.strokeColor = strokeColor;
+		return this;
+	}
+
+	public SVG3DLine setFillColor(String fillColor)
+	{
+		this.fillColor = fillColor;
+		return this;
+	}
+
+	public SVG3DLine setFillOpacity(double fillOpacity)
+	{
+		this.fillOpacity = fillOpacity;
+		return this;
+	}
+
+	public SVG3DLine setStrokeOpacity(double strokeOpacity)
+	{
+		this.strokeOpacity = strokeOpacity;
+		return this;
+	}
+
+	public SVG3DLine setStrokeWidth(int strokeWidth)
+	{
+		this.strokeWidth = strokeWidth;
+		return this;
 	}
 
 	@Override
@@ -55,11 +91,10 @@ public class SVG3DLine implements SVG3DElement
 		Vector deltaNormVector = deltaVector.normVector();
 
 		double maxDistance = Math.sqrt(depth);
-		int startStrokeWidth = (int) (5 * maxDistance / Math.sqrt(maxDistance * maxDistance + startLocation.getZ()));
-		int endStrokeWidth = (int) (5 * maxDistance / Math.sqrt(maxDistance * maxDistance + endLocation.getZ()));
+		int startStrokeWidth = (int) (this.strokeWidth * maxDistance / Math.sqrt(maxDistance * maxDistance + startLocation.getZ()));
+		int endStrokeWidth = (int) (this.strokeWidth * maxDistance / Math.sqrt(maxDistance * maxDistance + endLocation.getZ()));
 
-		//SVGElement element = new SVGLine((int) startLocation.getX(), (int) startLocation.getY(), (int) endLocation.getX(), (int) endLocation.getY());
-
+		//
 		SVGElement element = new SVGPolygon(Arrays.asList(	this.createSVGVector(startLocation.add(deltaNormVector	.multiply(startStrokeWidth)
 																													.rotateZ(90))),
 															this.createSVGVector(startLocation.add(deltaNormVector	.multiply(startStrokeWidth)
@@ -67,7 +102,12 @@ public class SVG3DLine implements SVG3DElement
 															this.createSVGVector(endLocation.add(deltaNormVector.multiply(endStrokeWidth)
 																												.rotateZ(-90))),
 															this.createSVGVector(endLocation.add(deltaNormVector.multiply(endStrokeWidth)
-																												.rotateZ(90))))).setStrokeColor("white");
+																												.rotateZ(90))))).setStrokeOpacity(this.strokeOpacity)
+																																.setStrokeWidth(this.strokeWidth
+																																		/ 2)
+																																.setFillOpacity(this.fillOpacity)
+																																.setFillColor(this.fillColor)
+																																.setStrokeColor(this.strokeColor);
 
 		double zIndex = Math.round(startLocation.add(deltaVector.divide(2))
 												.getZ());

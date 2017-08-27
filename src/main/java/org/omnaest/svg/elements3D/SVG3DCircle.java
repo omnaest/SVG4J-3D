@@ -31,6 +31,7 @@ public class SVG3DCircle implements SVG3DElement
 
 	private String	strokeColor	= "white";
 	private String	fillColor	= "red";
+	private int		strokeWidth	= 3;
 
 	public SVG3DCircle(int x, int y, int z, int r)
 	{
@@ -51,10 +52,16 @@ public class SVG3DCircle implements SVG3DElement
 
 		SVGElement element = new SVGCircle((int) location.getX(), (int) location.getY(), projectedRadius)	.setFillColor(this.fillColor)
 																											.setStrokeColor(this.strokeColor)
-																											.setStrokeWidth(3);
+																											.setStrokeWidth(this.strokeWidth);
 
 		double zIndex = location.getZ();
 		return new SVGElementAndZIndex(element, zIndex);
+	}
+
+	public SVG3DCircle setStrokeWidth(int strokeWidth)
+	{
+		this.strokeWidth = strokeWidth;
+		return this;
 	}
 
 	public SVG3DElement setFillColor(String fillColor)
