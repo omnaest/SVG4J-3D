@@ -19,6 +19,8 @@
 package org.omnaest.svg;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -40,6 +42,25 @@ public class SVGDrawer3D
 		this.width = width;
 		this.height = height;
 		this.depth = depth;
+	}
+
+	public SVGDrawer3D add(SVG3DElement... elements)
+	{
+		if (elements != null)
+		{
+			this.add(Arrays.asList(elements));
+		}
+		return this;
+	}
+
+	public SVGDrawer3D add(Collection<SVG3DElement> elements)
+	{
+		if (elements != null)
+		{
+			elements.stream()
+					.forEach(this::add);
+		}
+		return this;
 	}
 
 	public SVGDrawer3D add(SVG3DElement element)
