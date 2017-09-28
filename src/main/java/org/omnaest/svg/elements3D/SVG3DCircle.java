@@ -29,9 +29,11 @@ public class SVG3DCircle implements SVG3DElement
 	private int	z;
 	private int	r;
 
-	private String	strokeColor	= "white";
-	private String	fillColor	= "red";
-	private int		strokeWidth	= 3;
+	private String	strokeColor		= "white";
+	private String	fillColor		= "red";
+	private int		strokeWidth		= 3;
+	private double	fillOpacity		= 1.0;
+	private double	strokeOpacity	= 1.0;
 
 	public SVG3DCircle(int x, int y, int z, int r)
 	{
@@ -42,6 +44,18 @@ public class SVG3DCircle implements SVG3DElement
 		this.r = r;
 	}
 
+	public SVG3DCircle setFillOpacity(double fillOpacity)
+	{
+		this.fillOpacity = fillOpacity;
+		return this;
+	}
+
+	public SVG3DCircle setStrokeOpacity(double strokeOpacity)
+	{
+		this.strokeOpacity = strokeOpacity;
+		return this;
+	}
+
 	@Override
 	public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth)
 	{
@@ -50,7 +64,9 @@ public class SVG3DCircle implements SVG3DElement
 		double maxDistance = Math.sqrt(depth);
 		int projectedRadius = (int) (this.r * maxDistance / Math.sqrt(maxDistance * maxDistance + location.getZ()));
 
-		SVGElement element = new SVGCircle((int) location.getX(), (int) location.getY(), projectedRadius)	.setFillColor(this.fillColor)
+		SVGElement element = new SVGCircle((int) location.getX(), (int) location.getY(), projectedRadius)	.setStrokeOpacity(this.strokeOpacity)
+																											.setFillOpacity(this.fillOpacity)
+																											.setFillColor(this.fillColor)
 																											.setStrokeColor(this.strokeColor)
 																											.setStrokeWidth(this.strokeWidth);
 
@@ -73,6 +89,20 @@ public class SVG3DCircle implements SVG3DElement
 	public SVG3DCircle setStrokeColor(String strokeColor)
 	{
 		this.strokeColor = strokeColor;
+		return this;
+	}
+
+	public static interface ConditionalOperation<E>
+	{
+		public void execute(E element);
+	}
+
+	public SVG3DCircle conditionIf(boolean condition, ConditionalOperation<SVG3DCircle> operation)
+	{
+		if (condition)
+		{
+			operation.execute(this);
+		}
 		return this;
 	}
 
