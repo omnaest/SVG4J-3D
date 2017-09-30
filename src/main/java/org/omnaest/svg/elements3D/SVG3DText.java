@@ -18,15 +18,23 @@
 */
 package org.omnaest.svg.elements3D;
 
+import org.apache.commons.lang.StringUtils;
+import org.omnaest.svg.elements.SVGAnker;
 import org.omnaest.svg.elements.SVGText;
 import org.omnaest.svg.elements.base.SVGElement;
 import org.omnaest.vector.Vector;
 
+/**
+ * @see SVG3DElement
+ * @author omnaest
+ */
 public class SVG3DText implements SVG3DElement
 {
 	private int	x;
 	private int	y;
 	private int	z;
+
+	private String href = null;
 
 	private String	text;
 	private int		fontSize	= SVGText.DEFAULT_FONTSIZE;
@@ -46,6 +54,12 @@ public class SVG3DText implements SVG3DElement
 		return this;
 	}
 
+	public SVG3DText setHref(String href)
+	{
+		this.href = href;
+		return this;
+	}
+
 	@Override
 	public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth)
 	{
@@ -55,6 +69,11 @@ public class SVG3DText implements SVG3DElement
 		int projectedFontSize = (int) (this.fontSize * maxDistance / Math.sqrt(maxDistance * maxDistance + location.getZ()));
 
 		SVGElement element = new SVGText((int) location.getX(), (int) location.getY(), this.text).setFontSize(projectedFontSize);
+
+		if (StringUtils.isNotBlank(this.href))
+		{
+			element = new SVGAnker(this.href).addElement(element);
+		}
 
 		double zIndex = location.getZ();
 		return new SVGElementAndZIndex(element, zIndex);

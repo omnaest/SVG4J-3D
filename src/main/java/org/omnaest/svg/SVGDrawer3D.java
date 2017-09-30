@@ -74,7 +74,8 @@ public class SVGDrawer3D
 
 	public SVGRenderResult render(double angleX, double angleY, double angleZ)
 	{
-		SVGDrawer drawer = SVGUtils.getDrawer(-this.width / 2, -this.height / 2, this.width, this.height);
+		SVGDrawer drawer = SVGUtils	.getDrawer(-this.width / 2, -this.height / 2, this.width, this.height)
+									.enableCSSForAnkerLinks();
 		drawer.setEmbedReloadTimer(300, TimeUnit.MILLISECONDS);
 		drawer.addAll(this.elements	.stream()
 									.map(element3D -> element3D.projection(angleX, angleY, angleZ, this.depth))
