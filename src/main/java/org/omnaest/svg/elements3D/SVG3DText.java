@@ -38,6 +38,8 @@ public class SVG3DText implements SVG3DElement
 
 	private String	text;
 	private int		fontSize	= SVGText.DEFAULT_FONTSIZE;
+	private double	opacity		= 1.0;
+	private String	color;
 
 	public SVG3DText(int x, int y, int z, String text)
 	{
@@ -68,7 +70,9 @@ public class SVG3DText implements SVG3DElement
 		double maxDistance = Math.sqrt(depth);
 		int projectedFontSize = (int) (this.fontSize * maxDistance / Math.sqrt(maxDistance * maxDistance + location.getZ()));
 
-		SVGElement element = new SVGText((int) location.getX(), (int) location.getY(), this.text).setFontSize(projectedFontSize);
+		SVGElement element = new SVGText((int) location.getX(), (int) location.getY(), this.text)	.setFontSize(projectedFontSize)
+																									.setColor(this.color)
+																									.setOpacity(this.opacity);
 
 		if (StringUtils.isNotBlank(this.href))
 		{
@@ -77,6 +81,18 @@ public class SVG3DText implements SVG3DElement
 
 		double zIndex = location.getZ();
 		return new SVGElementAndZIndex(element, zIndex);
+	}
+
+	public SVG3DText setOpacity(double opacity)
+	{
+		this.opacity = opacity;
+		return this;
+	}
+
+	public SVG3DText setColor(String color)
+	{
+		this.color = color;
+		return this;
 	}
 
 }
