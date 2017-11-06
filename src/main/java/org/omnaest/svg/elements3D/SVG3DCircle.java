@@ -59,7 +59,7 @@ public class SVG3DCircle implements SVG3DElement
 	@Override
 	public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth)
 	{
-		Vector location = new Vector(this.x, this.y, this.z).rotate(angleX, angleY, angleZ);
+		Vector location = new Vector(this.x, this.y, this.z).rotatePassive(angleX, angleY, angleZ);
 
 		double maxDistance = Math.sqrt(depth);
 		int projectedRadius = (int) (this.r * maxDistance / Math.sqrt(maxDistance * maxDistance + location.getZ()));

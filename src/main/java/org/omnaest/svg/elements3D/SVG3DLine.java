@@ -84,8 +84,8 @@ public class SVG3DLine implements SVG3DElement
 	@Override
 	public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth)
 	{
-		Vector startLocation = new Vector(this.x1, this.y1, this.z1).rotate(angleX, angleY, angleZ);
-		Vector endLocation = new Vector(this.x2, this.y2, this.z2).rotate(angleX, angleY, angleZ);
+		Vector startLocation = new Vector(this.x1, this.y1, this.z1).rotatePassive(angleX, angleY, angleZ);
+		Vector endLocation = new Vector(this.x2, this.y2, this.z2).rotatePassive(angleX, angleY, angleZ);
 
 		Vector deltaVector = endLocation.subtract(startLocation);
 		Vector deltaNormVector = deltaVector.normVector();
