@@ -30,58 +30,69 @@ import org.omnaest.svg.elements3D.SVG3DElement;
 
 public class SVGDrawer3D
 {
-	private int	width;
-	private int	height;
-	private int	depth;
+    private int width;
+    private int height;
+    private int depth;
 
-	private List<SVG3DElement> elements = new ArrayList<>();
+    private boolean enableReloadScriptFunction = false;
 
-	public SVGDrawer3D(int width, int height, int depth)
-	{
-		super();
-		this.width = width;
-		this.height = height;
-		this.depth = depth;
-	}
+    private List<SVG3DElement> elements = new ArrayList<>();
 
-	public SVGDrawer3D add(SVG3DElement... elements)
-	{
-		if (elements != null)
-		{
-			this.add(Arrays.asList(elements));
-		}
-		return this;
-	}
+    public SVGDrawer3D(int width, int height, int depth)
+    {
+        super();
+        this.width = width;
+        this.height = height;
+        this.depth = depth;
+    }
 
-	public SVGDrawer3D add(Collection<SVG3DElement> elements)
-	{
-		if (elements != null)
-		{
-			elements.stream()
-					.forEach(this::add);
-		}
-		return this;
-	}
+    public SVGDrawer3D setReloadScriptFunctionEnable(boolean enabled)
+    {
+        this.enableReloadScriptFunction = enabled;
+        return this;
+    }
 
-	public SVGDrawer3D add(SVG3DElement element)
-	{
-		if (element != null)
-		{
-			this.elements.add(element);
-		}
-		return this;
-	}
+    public SVGDrawer3D add(SVG3DElement... elements)
+    {
+        if (elements != null)
+        {
+            this.add(Arrays.asList(elements));
+        }
+        return this;
+    }
 
-	public SVGRenderResult render(double angleX, double angleY, double angleZ)
-	{
-		SVGDrawer drawer = SVGUtils	.getDrawer(-this.width / 2, -this.height / 2, this.width, this.height)
-									.enableCSSForAnkerLinks();
-		drawer.setEmbedReloadTimer(300, TimeUnit.MILLISECONDS);
-		drawer.addAll(this.elements	.stream()
-									.map(element3D -> element3D.projection(angleX, angleY, angleZ, this.depth))
-									.sorted((e1, e2) -> -1 * Double.compare(e1.getzIndex(), e2.getzIndex()))
-									.map(elementAndZIndex -> elementAndZIndex.getElement())
-									.collect(Collectors.toList()));
-		return drawer.renderAsResult();
-	}
+    public SVGDrawer3D add(Collection<SVG3DElement> elements)
+    {
+        if (elements != null)
+        {
+            elements.stream()
+                    .forEach(this::add);
+        }
+        return this;
+    }
+
+    public SVGDrawer3D add(SVG3DElement element)
+    {
+        if (element != null)
+        {
+            this.elements.add(element);
+        }
+        return this;
+    }
+
+    public SVGRenderResult render(double angleX, double angleY, double angleZ)
+    {
+        SVGDrawer drawer = SVGUtils.getDrawer(-this.width / 2, -this.height / 2, this.width, this.height)
+                                   .enableCSSForAnkerLinks();
+        if (this.enableReloadScriptFunction)
+        {
+            drawer.setEmbedReloadTimer(300, TimeUnit.MILLISECONDS);
+        }
+        drawer.addAll(this.elements.stream()
+                                   .map(element3D -> element3D.projection(angleX, angleY, angleZ, this.depth))
+                                   .sorted((e1, e2) -> -1 * Double.compare(e1.getzIndex(), e2.getzIndex()))
+                                   .map(elementAndZIndex -> elementAndZIndex.getElement())
+                                   .collect(Collectors.toList()));
+        return drawer.renderAsResult();
+    }
 }

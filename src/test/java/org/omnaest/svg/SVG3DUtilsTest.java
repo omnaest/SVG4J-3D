@@ -20,6 +20,7 @@ package org.omnaest.svg;
 
 import java.io.File;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.omnaest.svg.elements3D.SVG3DCircle;
 import org.omnaest.svg.elements3D.SVG3DLine;
@@ -27,33 +28,34 @@ import org.omnaest.svg.elements3D.SVG3DLine;
 public class SVG3DUtilsTest
 {
 
-	@Test
-	public void testGetDrawer() throws Exception
-	{
-		//
-		SVGDrawer3D renderer = SVG3DUtils.getDrawer(1000, 800, 200);
+    @Test
+    @Ignore
+    public void testGetDrawer() throws Exception
+    {
+        //
+        SVGDrawer3D renderer = SVG3DUtils.getDrawer(1000, 800, 200);
 
-		renderer.add(new SVG3DCircle(100, 0, 0, 20));
-		renderer.add(new SVG3DCircle(0, 100, 0, 20));
-		renderer.add(new SVG3DCircle(0, 0, 100, 20));
+        renderer.add(new SVG3DCircle(100, 0, 0, 20));
+        renderer.add(new SVG3DCircle(0, 100, 0, 20));
+        renderer.add(new SVG3DCircle(0, 0, 100, 20));
 
-		renderer.add(new SVG3DLine(100, 0, 0, 0, 100, 0));
-		renderer.add(new SVG3DLine(100, 0, 0, 0, 0, 100));
-		renderer.add(new SVG3DLine(0, 100, 0, 0, 0, 100));
+        renderer.add(new SVG3DLine(100, 0, 0, 0, 100, 0));
+        renderer.add(new SVG3DLine(100, 0, 0, 0, 0, 100));
+        renderer.add(new SVG3DLine(0, 100, 0, 0, 0, 100));
 
-		//
-		double angleX = 0.0;
-		double angleY = 0.0;
-		double angleZ = 0.0;
-		while (true)
-		{
-			angleX += 1.0;
-			angleY += 5.0;
-			renderer.render(angleX, angleY, angleZ)
-					.writeToFile(new File("C:/Temp/test3D.svg"));
-			Thread.sleep(200);
+        //
+        double angleX = 0.0;
+        double angleY = 0.0;
+        double angleZ = 0.0;
+        while (true)
+        {
+            angleX += 1.0;
+            angleY += 5.0;
+            renderer.render(angleX, angleY, angleZ)
+                    .writeToFile(new File("C:/Temp/test3D.svg"));
+            Thread.sleep(200);
 
-		}
-	}
+        }
+    }
 
 }
