@@ -42,6 +42,7 @@ import java.util.stream.Collectors;
 
 import org.omnaest.svg.SVGDrawer.SVGRenderResult;
 import org.omnaest.svg.elements3D.SVG3DElement;
+import org.omnaest.utils.duration.TimeDuration;
 
 public class SVGDrawer3D
 {
@@ -49,7 +50,8 @@ public class SVGDrawer3D
     private int height;
     private int depth;
 
-    private boolean enableReloadScriptFunction = false;
+    private boolean      enableReloadScriptFunction = false;
+    private TimeDuration refreshInterval            = TimeDuration.of(300, TimeUnit.MILLISECONDS);
 
     private List<SVG3DElement> elements = new ArrayList<>();
 
@@ -64,6 +66,12 @@ public class SVGDrawer3D
     public SVGDrawer3D setReloadScriptFunctionEnable(boolean enabled)
     {
         this.enableReloadScriptFunction = enabled;
+        return this;
+    }
+
+    public SVGDrawer3D setRefreshInterval(int duration, TimeUnit timeUnit)
+    {
+        this.refreshInterval = TimeDuration.of(duration, timeUnit);
         return this;
     }
 
@@ -101,7 +109,7 @@ public class SVGDrawer3D
                                    .enableCSSForAnkerLinks();
         if (this.enableReloadScriptFunction)
         {
-            drawer.setEmbedReloadTimer(300, TimeUnit.MILLISECONDS);
+            drawer.setEmbedReloadTimer((int) this.refreshInterval.getDuration(), this.refreshInterval.getTimeUnit());
         }
         drawer.addAll(this.elements.stream()
                                    .map(element3D -> element3D.projection(angleX, angleY, angleZ, this.depth))
