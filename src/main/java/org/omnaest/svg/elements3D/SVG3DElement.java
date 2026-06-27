@@ -35,5 +35,5 @@ package org.omnaest.svg.elements3D;
 
 public interface SVG3DElement
 {
-	public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth);
+    public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth);
 }

@@ -39,86 +39,86 @@ import org.omnaest.vector.Vector;
 
 public class SVG3DCircle implements SVG3DElement
 {
-	private int	x;
-	private int	y;
-	private int	z;
-	private int	r;
+    private int    x;
+    private int    y;
+    private int    z;
+    private int    r;
 
-	private String	strokeColor		= "white";
-	private String	fillColor		= "red";
-	private int		strokeWidth		= 3;
-	private double	fillOpacity		= 1.0;
-	private double	strokeOpacity	= 1.0;
+    private String strokeColor   = "white";
+    private String fillColor     = "red";
+    private int    strokeWidth   = 3;
+    private double fillOpacity   = 1.0;
+    private double strokeOpacity = 1.0;
 
-	public SVG3DCircle(int x, int y, int z, int r)
-	{
-		super();
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.r = r;
-	}
+    public SVG3DCircle(int x, int y, int z, int r)
+    {
+        super();
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.r = r;
+    }
 
-	public SVG3DCircle setFillOpacity(double fillOpacity)
-	{
-		this.fillOpacity = fillOpacity;
-		return this;
-	}
+    public SVG3DCircle setFillOpacity(double fillOpacity)
+    {
+        this.fillOpacity = fillOpacity;
+        return this;
+    }
 
-	public SVG3DCircle setStrokeOpacity(double strokeOpacity)
-	{
-		this.strokeOpacity = strokeOpacity;
-		return this;
-	}
+    public SVG3DCircle setStrokeOpacity(double strokeOpacity)
+    {
+        this.strokeOpacity = strokeOpacity;
+        return this;
+    }
 
-	@Override
-	public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth)
-	{
-		Vector location = new Vector(this.x, this.y, this.z).rotatePassive(angleX, angleY, angleZ);
+    @Override
+    public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth)
+    {
+        Vector location = new Vector(this.x, this.y, this.z).rotatePassive(angleX, angleY, angleZ);
 
-		double maxDistance = Math.sqrt(depth);
-		int projectedRadius = (int) (this.r * maxDistance / Math.sqrt(maxDistance * maxDistance + location.getZ()));
+        double maxDistance = Math.sqrt(depth);
+        int projectedRadius = (int) (this.r * maxDistance / Math.sqrt(maxDistance * maxDistance + location.getZ()));
 
-		SVGElement element = new SVGCircle((int) location.getX(), (int) location.getY(), projectedRadius)	.setStrokeOpacity(this.strokeOpacity)
-																											.setFillOpacity(this.fillOpacity)
-																											.setFillColor(this.fillColor)
-																											.setStrokeColor(this.strokeColor)
-																											.setStrokeWidth(this.strokeWidth);
+        SVGElement element = new SVGCircle((int) location.getX(), (int) location.getY(), projectedRadius).setStrokeOpacity(this.strokeOpacity)
+                                                                                                         .setFillOpacity(this.fillOpacity)
+                                                                                                         .setFillColor(this.fillColor)
+                                                                                                         .setStrokeColor(this.strokeColor)
+                                                                                                         .setStrokeWidth(this.strokeWidth);
 
-		double zIndex = location.getZ();
-		return new SVGElementAndZIndex(element, zIndex);
-	}
+        double zIndex = location.getZ();
+        return new SVGElementAndZIndex(element, zIndex);
+    }
 
-	public SVG3DCircle setStrokeWidth(int strokeWidth)
-	{
-		this.strokeWidth = strokeWidth;
-		return this;
-	}
+    public SVG3DCircle setStrokeWidth(int strokeWidth)
+    {
+        this.strokeWidth = strokeWidth;
+        return this;
+    }
 
-	public SVG3DElement setFillColor(String fillColor)
-	{
-		this.fillColor = fillColor;
-		return this;
-	}
+    public SVG3DElement setFillColor(String fillColor)
+    {
+        this.fillColor = fillColor;
+        return this;
+    }
 
-	public SVG3DCircle setStrokeColor(String strokeColor)
-	{
-		this.strokeColor = strokeColor;
-		return this;
-	}
+    public SVG3DCircle setStrokeColor(String strokeColor)
+    {
+        this.strokeColor = strokeColor;
+        return this;
+    }
 
-	public static interface ConditionalOperation<E>
-	{
-		public void execute(E element);
-	}
+    public static interface ConditionalOperation<E>
+    {
+        public void execute(E element);
+    }
 
-	public SVG3DCircle conditionIf(boolean condition, ConditionalOperation<SVG3DCircle> operation)
-	{
-		if (condition)
-		{
-			operation.execute(this);
-		}
-		return this;
-	}
+    public SVG3DCircle conditionIf(boolean condition, ConditionalOperation<SVG3DCircle> operation)
+    {
+        if (condition)
+        {
+            operation.execute(this);
+        }
+        return this;
+    }
 
 }

@@ -40,8 +40,8 @@ package org.omnaest.svg;
  */
 public class SVG3DUtils
 {
-	public static SVGDrawer3D getDrawer(int width, int height, int depth)
-	{
-		return new SVGDrawer3D(width, height, depth);
-	}
+    public static SVGDrawer3D getDrawer(int width, int height, int depth)
+    {
+        return new SVGDrawer3D(width, height, depth);
+    }
 }

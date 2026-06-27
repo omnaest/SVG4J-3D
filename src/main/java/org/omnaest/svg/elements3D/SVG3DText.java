@@ -45,69 +45,69 @@ import org.omnaest.vector.Vector;
  */
 public class SVG3DText implements SVG3DElement
 {
-	private int	x;
-	private int	y;
-	private int	z;
+    private int    x;
+    private int    y;
+    private int    z;
 
-	private String href = null;
+    private String href     = null;
 
-	private String	text;
-	private int		fontSize	= SVGText.DEFAULT_FONTSIZE;
-	private double	opacity		= 1.0;
-	private String	color;
+    private String text;
+    private int    fontSize = SVGText.DEFAULT_FONTSIZE;
+    private double opacity  = 1.0;
+    private String color;
 
-	public SVG3DText(int x, int y, int z, String text)
-	{
-		super();
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.text = text;
-	}
+    public SVG3DText(int x, int y, int z, String text)
+    {
+        super();
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.text = text;
+    }
 
-	public SVG3DText setFontSize(int fontSize)
-	{
-		this.fontSize = fontSize;
-		return this;
-	}
+    public SVG3DText setFontSize(int fontSize)
+    {
+        this.fontSize = fontSize;
+        return this;
+    }
 
-	public SVG3DText setHref(String href)
-	{
-		this.href = href;
-		return this;
-	}
+    public SVG3DText setHref(String href)
+    {
+        this.href = href;
+        return this;
+    }
 
-	@Override
-	public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth)
-	{
-		Vector location = new Vector(this.x, this.y, this.z).rotatePassive(angleX, angleY, angleZ);
+    @Override
+    public SVGElementAndZIndex projection(double angleX, double angleY, double angleZ, int depth)
+    {
+        Vector location = new Vector(this.x, this.y, this.z).rotatePassive(angleX, angleY, angleZ);
 
-		double maxDistance = Math.sqrt(depth);
-		int projectedFontSize = (int) (this.fontSize * maxDistance / Math.sqrt(maxDistance * maxDistance + location.getZ()));
+        double maxDistance = Math.sqrt(depth);
+        int projectedFontSize = (int) (this.fontSize * maxDistance / Math.sqrt(maxDistance * maxDistance + location.getZ()));
 
-		SVGElement element = new SVGText((int) location.getX(), (int) location.getY(), this.text)	.setFontSize(projectedFontSize)
-																									.setColor(this.color)
-																									.setOpacity(this.opacity);
+        SVGElement element = new SVGText((int) location.getX(), (int) location.getY(), this.text).setFontSize(projectedFontSize)
+                                                                                                 .setColor(this.color)
+                                                                                                 .setOpacity(this.opacity);
 
-		if (StringUtils.isNotBlank(this.href))
-		{
-			element = new SVGAnker(this.href).addElement(element);
-		}
+        if (StringUtils.isNotBlank(this.href))
+        {
+            element = new SVGAnker(this.href).addElement(element);
+        }
 
-		double zIndex = location.getZ();
-		return new SVGElementAndZIndex(element, zIndex);
-	}
+        double zIndex = location.getZ();
+        return new SVGElementAndZIndex(element, zIndex);
+    }
 
-	public SVG3DText setOpacity(double opacity)
-	{
-		this.opacity = opacity;
-		return this;
-	}
+    public SVG3DText setOpacity(double opacity)
+    {
+        this.opacity = opacity;
+        return this;
+    }
 
-	public SVG3DText setColor(String color)
-	{
-		this.color = color;
-		return this;
-	}
+    public SVG3DText setColor(String color)
+    {
+        this.color = color;
+        return this;
+    }
 
 }

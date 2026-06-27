@@ -46,14 +46,14 @@ import org.omnaest.utils.duration.TimeDuration;
 
 public class SVGDrawer3D
 {
-    private int width;
-    private int height;
-    private int depth;
+    private int                width;
+    private int                height;
+    private int                depth;
 
-    private boolean      enableReloadScriptFunction = false;
-    private TimeDuration refreshInterval            = TimeDuration.of(300, TimeUnit.MILLISECONDS);
+    private boolean            enableReloadScriptFunction = false;
+    private TimeDuration       refreshInterval            = TimeDuration.of(300, TimeUnit.MILLISECONDS);
 
-    private List<SVG3DElement> elements = new ArrayList<>();
+    private List<SVG3DElement> elements                   = new ArrayList<>();
 
     public SVGDrawer3D(int width, int height, int depth)
     {
